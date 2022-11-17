@@ -3,16 +3,21 @@ package com.example.spring_servletcontainer.controller;
 import com.example.spring_servletcontainer.repository.Post;
 import com.example.spring_servletcontainer.service.PostService;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Optional;
 
+@Controller
 public class PostController {
     public final static String APPLICATION_JSON = "application/json";
+
     PostService postService;
 
+    @Autowired
     public PostController(PostService postService) {
         this.postService = postService;
     }
