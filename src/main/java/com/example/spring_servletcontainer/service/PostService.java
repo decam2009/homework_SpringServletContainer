@@ -3,8 +3,8 @@ package com.example.spring_servletcontainer.service;
 import com.example.spring_servletcontainer.repository.Post;
 import com.example.spring_servletcontainer.repository.PostRepository;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.BlockingQueue;
 
 public class PostService {
     PostRepository repository;
@@ -13,7 +13,7 @@ public class PostService {
         this.repository = repository;
     }
 
-    public List<Post> all() {
+    public BlockingQueue<Post> all() {
         return repository.all();
     }
 

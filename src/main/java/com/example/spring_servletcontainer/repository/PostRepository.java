@@ -1,17 +1,21 @@
 package com.example.spring_servletcontainer.repository;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PostRepository {
-
-    List<Post> posts = new ArrayList<>();
-    private static int index = 0;
+    private final int BLOCKING_QUEUE_CAPACITY = 255;
+    private final int INDEX_INITIAL_VALUE = 0;
+    BlockingQueue<Post> posts = new ArrayBlockingQueue<>(BLOCKING_QUEUE_CAPACITY);
+    private final AtomicInteger index = new AtomicInteger(INDEX_INITIAL_VALUE);
 
     private int autoincrement() {
-        return index++;
+        return index.incrementAndGet();
     }
 
-    public List<Post> all() {
+    public BlockingQueue<Post> all() {
         return posts;
     }
 
@@ -21,6 +25,7 @@ public class PostRepository {
 
     public Post save(Post post) {
         //Ниже обработка когда id = 0
+
         if (post.getId() == 0) {
             post.setId(autoincrement());
             posts.add(post);
