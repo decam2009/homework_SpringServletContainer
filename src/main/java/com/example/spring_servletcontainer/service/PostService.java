@@ -1,15 +1,15 @@
 package com.example.spring_servletcontainer.service;
 
 import com.example.spring_servletcontainer.repository.Post;
-import com.example.spring_servletcontainer.repository.PostRepository;
+import com.example.spring_servletcontainer.repository.PostRepositoryImpl;
 
 import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 
 public class PostService {
-    PostRepository repository;
+    PostRepositoryImpl repository;
 
-    public PostService(PostRepository repository) {
+    public PostService(PostRepositoryImpl repository) {
         this.repository = repository;
     }
 
