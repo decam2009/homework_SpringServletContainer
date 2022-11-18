@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.UUID;
+import java.util.Optional;
 
 public class PostController {
     public final static String APPLICATION_JSON = "application/json";
@@ -17,18 +17,25 @@ public class PostController {
         this.postService = postService;
     }
 
-    public synchronized void all(HttpServletResponse response) throws IOException {
+    public void all(HttpServletResponse response) throws IOException {
         response.setContentType(APPLICATION_JSON);
         final var data = postService.all();
         final var gson = new Gson();
         response.getWriter().print(gson.toJson(data));
     }
 
-    public synchronized void getById(long id, HttpServletResponse response) {
-        postService.getById(id);
+    public void getById(long id, HttpServletResponse response) throws Exception {
+        Optional<Post> postOptional = postService.getById(id);
+        if (postOptional.isEmpty()) {
+            throw new Exception("Сообщения с id " + id + " не существует");
+        } else {
+            response.setContentType(APPLICATION_JSON);
+            final var gson = new Gson();
+            response.getWriter().print(gson.toJson(postOptional));
+        }
     }
 
-    public synchronized void save(Reader body, HttpServletResponse response) throws IOException {
+    public void save(Reader body, HttpServletResponse response) throws IOException {
         response.setContentType(APPLICATION_JSON);
         final var gson = new Gson();
         final var post = gson.fromJson(body, Post.class);
@@ -36,7 +43,7 @@ public class PostController {
         response.getWriter().print(gson.toJson(post));
     }
 
-    public synchronized void removeById(long id, HttpServletResponse response) {
+    public void removeById(long id, HttpServletResponse response) {
         postService.removeById(id);
     }
 }

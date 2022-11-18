@@ -1,13 +1,14 @@
 package com.example.spring_servletcontainer.repository;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Post {
+public class Post implements Serializable {
     long id;
     String message;
 
-    public Post(long id, String message) {
-        this.id = id;
+    public Post (String message) {
+        this.id = 0;
         this.message = message;
     }
 
